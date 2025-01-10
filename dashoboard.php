@@ -1,6 +1,10 @@
 <?php
 include("connection.php");
 include("session.php");
+
+// echo '<pre>';
+// print_r($_SESSION);
+// die();
 ?>
 <html>
     <style>
@@ -32,15 +36,12 @@ include("session.php");
         ?>
         </a> 
     </a>
-    <label style="margin-left:700;">Welcome,
+    <label style="margin-left:750;">Welcome,
         <?php
-
             $sql = "SELECT * FROM users";
             $result = mysqli_query($conn,$sql);
             if(isset($_SESSION['full_name'])){
                 echo $_SESSION['full_name'];
-            }else{
-                echo 'Guest';
             }
         ?>
     </label>

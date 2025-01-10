@@ -98,7 +98,7 @@
         if (empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr) && empty($passwordErr) && empty($cpasswordErr)) {
             $hashedPassword = md5($password);
             $sql = "INSERT INTO users (`full_name`, `email`, `mobile`, `dob`, `gender`, `hobby`, `images`, `password`) 
-                    VALUES ('".$full_name."', '".$email."', '".$mobile."', '".$dob."', '".$gender."', '".$hobby."', '".$fileNamesJson."', '".$hashedPassword."')";
+                    VALUES ('".$full_name."', '".$email."', '".$mobile."', '".$dob."', '".$gender."', '".$hobby."', '".$fileNameJson."', '".$hashedPassword."')";
 
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['success_message'] = "User Successfully Registered";

@@ -34,7 +34,7 @@
           $row = mysqli_fetch_assoc($result);
           if ($row['email'] == $email && $row['password'] == $hashedPassword) {
               $_SESSION['id'] = $row['id'];
-              $_SESSION['name'] = $row['name'];
+              $_SESSION['full_name'] = $row['full_name'];
               $_SESSION['login_success'] = true;
               // $_SESSION['user'] = $row;
               header("location: dashoboard.php");

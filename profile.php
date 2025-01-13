@@ -8,6 +8,7 @@
     $sql = "SELECT * FROM users WHERE `id` = $id";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
+
     $newPassword = "";
     $full_name = $row['full_name'];
     $email = $row['email'];
@@ -82,8 +83,8 @@
              $passwordErr = "Password must contain at least 1 lowercase letter";
         }
 
-        if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
-            $filenames = json_encode(array_values($imageList)); 
+        if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {    
+            $filenames = json_encode(array_values($imageList));
             $hashedPassword = md5($NewPassword);
             if (!empty($NewPassword)) {
                 if(!empty($passwordErr)){
@@ -104,7 +105,8 @@
                         `hobby` = '$hobby',
                         `images` = '$filenames'
                         WHERE id = '$id'";
-            }
+
+            }   
             
             if (mysqli_query($conn, $sql)) {
                 header("Location: dashoboard.php");

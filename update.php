@@ -1,15 +1,13 @@
 <?php
     include('connection.php');
     include('session.php');
- 
 
     $id = $_GET['id'];
     $sql = "SELECT * FROM users WHERE id = $id";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_assoc($result);
-    // echo '<pre>';
-    // print_r($row);
-    // die();
+
+
     $full_name = $row['full_name'];
     $email = $row['email'];
     $mobile = $row['mobile'];
@@ -25,14 +23,14 @@
     $genderErr = "";
     $hobbyErr = "";
 
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {  
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
         $mobile = $_POST['mobile'];
         $gender = $_POST['gender'];
         $dob = $_POST['dob'];
         $hobby = $_POST['hobby'];
-        
+
         $newfileName = '';
         if ($_FILES['file']['name'] != '') {
             $path = $_FILES['file']['name'];
@@ -43,8 +41,8 @@
                 if ($images != '' && file_exists('upload/'.$images)) {
                     unlink('upload/'.$images); 
                 }
-            } else {
-                echo "Error in file upload.";
+                } else {
+                    echo "Error in file upload.";
             }
         } else {
             $newfileName = $images;
@@ -64,7 +62,7 @@
         } elseif (!preg_match("/^[0-9]{10}$/", $mobile)) { 
             $mobileErr = "Invalid mobile number";
         }
-        if (empty($dob)) {
+        if(empty($dob)){
             $dobErr = "Date of birth is required";
         }
         if (empty($gender)) {
@@ -78,25 +76,27 @@
             $hobbyErr = "Invalid hobby";
         }
         if (empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
-            $filenames = json_encode(array_values($imageList)); 
+
             $sql = "UPDATE users SET 
-                        `full_name` = '$full_name',
-                        `dob` = '$dob',
-                        `gender` = '$gender',
-                        `hobby` = '$hobby',
-                        `images` = '$images'
-                        WHERE id = '$id'";
-            if (mysqli_query($conn, $sql)) {
-                header("location: dashoboard.php"); 
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    `full_name` = '$full_name',
+                    `dob`       = '$dob',
+                    `gender`    = '$gender',
+                    `hobby`     = '$hobby',
+                    `images`    = '$newfileName'
+                    WHERE id = '$id'";
+
+            if(mysqli_query($conn,$sql)){
+                header("location:dashoboard.php");
+            }
+            else{
+                echo "Error :".$sql."<br>".mysqli_error($conn);
             }
         }
 }
 ?>      
 <html>
 <body>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data"></form>
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="full_name" value="<?php echo $full_name; ?>"><br>    
     <span class="error"><?php echo  $nameErr;?></span><br>
@@ -110,7 +110,7 @@
     <input type="date" id="date" name="dob" value="<?php echo $dob;?>"><br>
     <span><?php echo $dobErr;?></span><br>
     <label for="gender">Gender:</label><br>
-    <input type="radio" id="Male" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>>
+    <input type="radio" id="Male" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' :''; ?>>
     <label for="male">Male</labe><br>
     <input type="radio" id="Female" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>>
     <label for="female">Female</label><br><br>
@@ -121,11 +121,11 @@
     <label for="file">Image:</label>
     <input type="file" id="file" name="file">
     <?php 
-        $imageList = $row['images'];
-        $imagejson = json_decode($imageList);
-        foreach ($imagejson as $image) {    
-            echo '<img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
-        }
+            $imageList = $row['images'];
+            $imagejson = json_decode($imageList);
+            foreach($imagejson as $image){
+                    echo '<img src="upload/'.$image.'" style="height:40px;width: 40px;margin:right 20px;">';
+            }
     ?>
     <br><br>
     <input type="submit" value="submit" name="submit">

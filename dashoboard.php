@@ -1,10 +1,6 @@
 <?php
 include("connection.php");
 include("session.php");
-
-// echo '<pre>';
-// print_r($_SESSION);
-// die();
 ?>
 <html>
     <style>
@@ -21,9 +17,6 @@ include("session.php");
           $sql = "SELECT * FROM users";
           $result = mysqli_query($conn,$sql);
           $row = mysqli_fetch_assoc($result);
-        //   echo '<pre>';
-        //   print_r($row);
-        //   die();
     ?>
     <a href="profile.php?id=<?php echo $_SESSION['id'];?>" style="margin-left:1200px">
         <button>Edit Profile</button>  
@@ -83,7 +76,7 @@ include("session.php");
             ?>
             </td>
             <td>
-                <a href="delete.php?id=<?php echo $row['id']; ?>">Delete</a>&nbsp;
+                <a href="delete.php?id=<?php echo $row['id'];?>">Delete</a>&nbsp;
                 <a href="update.php?id=<?php echo $row['id']; ?>">Edit</a>
             </td>
         </tr>

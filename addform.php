@@ -54,6 +54,9 @@ if(isset($_POST['submit'])){
     }
 
     $filenewname = implode(',', $fileNames);
+    // echo '<pre>';
+    // print_r($filenewname);
+    // die();
 
     if (empty($full_name)) {
         $nameErr = "Name is required";
@@ -91,13 +94,15 @@ if(isset($_POST['submit'])){
 
     if (empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
         $filenewname = json_encode($fileNames);
-        $sql = "INSERT INTO users (`full_name`, `email`, `mobile`, `dob`, `gender`, `hobby`, `images`) 
-                VALUES ('$full_name', '$email', '$mobile', '$dob', '$gender', '$hobby', '$filenewname')";
         
-        if (mysqli_query($conn, $sql)) {
-            header("Location: dashoboard.php");
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+
+        $sql = "INSERT INTO users(`full_name`,`email`,`mobile`,`dob`,`gender`,`hobby`,`images`)
+                VALUES ('$full_name','$email','$mobile','$dob','$gender','$hobby','$filenewname')";
+
+        if(mysqli_query($conn,$sql)){
+            header("Location:dashoboard.php");
+        } else{
+            echo "Error :" .$sql . "<br>".mysqli_error($conn);
         }
     }
 }

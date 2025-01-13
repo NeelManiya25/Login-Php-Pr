@@ -109,7 +109,7 @@
         }
     }
 ?>
-
+<html>
 <form method="POST" enctype="multipart/form-data">
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="full_name" value="<?php echo isset($full_name) ? $full_name : ''; ?>"><br>
@@ -151,5 +151,4 @@
 
     <input type="submit" value="Submit" name="submit">
 </form>
-
-`
+</html>

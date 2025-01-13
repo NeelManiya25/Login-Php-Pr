@@ -21,6 +21,24 @@ if(isset($_POST['submit'])){
     $fileNames = [];
     $uploadDirectory = 'upload/'; 
 
+    $emailCheckQuery = "SELECT * FROM users WHERE email = '$email'";
+        $mobileCheckQuery = "SELECT * FROM users WHERE mobile = '$mobile'";
+
+        $emailResult = mysqli_query($conn, $emailCheckQuery);
+        if (!$emailResult) {
+            die("Error Email: " . mysqli_error($conn));
+        }
+        if (mysqli_num_rows($emailResult) > 0) {
+            $emailErr = "Email is already taken!";
+        }
+        $mobileResult = mysqli_query($conn, $mobileCheckQuery);
+        if (!$mobileResult) {
+            die("Error mobile: " . mysqli_error($conn));
+        }
+        if (mysqli_num_rows($mobileResult) > 0) {
+            $mobileErr = "Mobile number is already taken!";
+        }
+
     foreach ($_FILES['file']['name'] as $key => $value) {
         $fileTmpName = $_FILES['file']['tmp_name'][$key];
         $fileName = $_FILES['file']['name'][$key];

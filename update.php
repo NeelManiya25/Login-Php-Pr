@@ -86,9 +86,6 @@
                         `hobby` = '$hobby',
                         `images` = '$images'
                         WHERE id = '$id'";
-                echo '<pre>';
-                print_r($sql);
-                die();
             if (mysqli_query($conn, $sql)) {
                 header("location: dashoboard.php"); 
             } else {
@@ -123,11 +120,13 @@
     <span><?php echo $hobbyErr;?></span><br>
     <label for="file">Image:</label>
     <input type="file" id="file" name="file">
-    <?php if (isset($row['images']) && $row['images'] != '') { ?>
-        <img src="upload/<?php echo $row['images']; ?>" style="height:40px;width:40px;">
-    <?php } else {
-        echo "No image found.";
-    } ?>
+    <?php 
+        $imageList = $row['images'];
+        $imagejson = json_decode($imageList);
+        foreach ($imagejson as $image) {    
+            echo '<img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
+        }
+    ?>
     <br><br>
     <input type="submit" value="submit" name="submit">
 </form> 

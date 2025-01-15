@@ -49,7 +49,13 @@ if (isset($_POST['submit'])) {
         $deleteImages = $_POST['delete_images']; 
         foreach ($deleteImages as $deleteImage) {
                 if(!empty('unchecked' != $deleteImage )){     
-            if (($key = array_search($deleteImage, $imageList)) !== true) {
+                    // echo '<pre>';
+                    // print_r($deleteImage);
+                    // die();
+            if (($key = array_search($deleteImage, $imageList)) !== false) {
+                // echo '<pre>';
+                // print_r($key);
+                // die();
                     if (file_exists('upload/'.$deleteImage)) {
                         unlink('upload/'.$deleteImage); 
                     }
@@ -161,12 +167,6 @@ if (isset($_POST['submit'])) {
     }
     ?>
     <br><br>
-    <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
-    <span><?php echo $passwordErr;?></span><br>
-    <label for="cpassword">Confirm Password:</label><br>
-    <input type="password" id="cpassword" name="cpassword"><br><br>
-    <span><?php echo $passwordErr; ?></span><br>
     <input type="submit" value="Submit" name="submit">
 </form> 
 </body>

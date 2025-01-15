@@ -42,6 +42,19 @@
                 }
             }
         }
+        if (isset($_POST['delete_images'])) {
+            $deleteImages = $_POST['delete_images']; 
+            foreach ($deleteImages as $deleteImage) {
+                    if(!empty('unchecked' != $deleteImage )){     
+                if (($key = array_search($deleteImage, $imageList)) !== true) {
+                        if (file_exists('upload/'.$deleteImage)) {
+                            unlink('upload/'.$deleteImage); 
+                        }
+                    unset($imageList[$key]);
+                }
+            }
+        }
+    }
 
         if (empty($full_name)) {
             $nameErr = "Name is required";
@@ -105,7 +118,6 @@
                         `hobby` = '$hobby',
                         `images` = '$filenames'
                         WHERE id = '$id'";
-
             }   
             
             if (mysqli_query($conn, $sql)) {
@@ -143,7 +155,8 @@
     <?php  
     if($imageList){
         foreach($imageList as $image){
-            echo '<img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
+            echo '<input type="checkbox" name="delete_images[]" value="'. $image .'"checked>
+                    <img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
         }
     } else{
         echo "No images found.";

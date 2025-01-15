@@ -12,7 +12,7 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
     $dob = $_POST['dob'];
-    $gender = $_POST['gender'];
+    $gender = isset($_POST['gender']) ? $_POST['gender'] : ''; 
     $hobby = $_POST['hobby'];
     $fileNames = [];
     $uploadDirectory = 'upload/';
@@ -87,23 +87,23 @@ if(isset($_POST['submit'])){
 ?>
 <form method="POST" enctype="multipart/form-data">
     <label for="name">Name:</label><br>
-    <input type="text" id="name" name="full_name" value="<?php echo isset($full_name) ? $full_name : ''; ?>"><br><br>
+    <input type="text" id="name" name="full_name" value="<?php echo isset($full_name) ? $full_name : ''; ?>"><br>
     <span class="error"><?php echo $nameErr; ?></span><br>
     <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" value="<?php echo isset($email) ? $email : ''; ?>"><br><br>
+    <input type="text" id="email" name="email" value="<?php echo isset($email) ? $email : ''; ?>"><br>
     <span class="error"><?php echo $emailErr; ?></span><br>
     <label for="mobile">Mobile Number:</label><br>
-    <input type="tel" id="mobile" name="mobile" value="<?php echo isset($mobile) ? $mobile : ''; ?>"><br><br>
+    <input type="tel" id="mobile" name="mobile" value="<?php echo isset($mobile) ? $mobile : ''; ?>"><br>
     <span class="error"><?php echo $mobileErr; ?></span><br>
     <label for="dob">Date of Birth:</label><br>
-    <input type="date" id="dob" name="dob" value="<?php echo isset($dob) ? $dob : ''; ?>"><br><br>
+    <input type="date" id="dob" name="dob" value="<?php echo isset($dob) ? $dob : ''; ?>"><br>
     <span class="error"><?php echo $dobErr; ?></span><br>
     <label for="gender">Gender:</label><br>
     <input type="radio" id="Male" name="gender" value="Male" <?php echo isset($gender) && $gender == 'Male' ? 'checked' : ''; ?>> Male<br>
     <input type="radio" id="Female" name="gender" value="Female" <?php echo isset($gender) && $gender == 'Female' ? 'checked' : ''; ?>> Female<br><br>
-    <span class="error"><?php echo $genderErr; ?></span><br>
+    <span class="error"><?php echo $genderErr; ?></span>
     <label for="hobby">Hobby:</label><br>
-    <input type="text" id="hobby" name="hobby" value="<?php echo isset($hobby) ? $hobby : ''; ?>"><br><br>
+    <input type="text" id="hobby" name="hobby" value="<?php echo isset($hobby) ? $hobby : ''; ?>"><br>
     <span class="error"><?php echo $hobbyErr; ?></span><br>
     <label for="file">Image:</label><br>
     <input type="file" id="file" name="file[]" multiple><br><br>

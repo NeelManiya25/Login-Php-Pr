@@ -36,7 +36,6 @@
               $_SESSION['id'] = $row['id'];
               $_SESSION['full_name'] = $row['full_name'];
               $_SESSION['login_success'] = true;
-              // $_SESSION['user'] = $row;
               header("location: dashoboard.php");
           }
       } else {
@@ -53,6 +52,10 @@
   <span><?php echo $emailErr; ?></span><br><br>
   <label for="password">Password:</label><br>
   <input type="password" id="password" name="password"><br>
-  <span><?php echo $passwordErr; ?></span><br>
+  <span><?php echo $passwordErr; ?></span><br><br>
   <input type="submit" value="Submit" name="submit">
 </form>
+<br>
+<a href="Registration.php">
+  <button>Register</button>
+</a>

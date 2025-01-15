@@ -25,7 +25,7 @@
 
     if (isset($_POST['submit'])) {
         $full_name = $_POST['full_name'];
-        $gender = $_POST['gender']; 
+        $gender = isset($_POST['gender']) ? $_POST['gender'] : ''; 
         $dob = $_POST['dob'];
         $hobby = $_POST['hobby'];
         $NewPassword = $_POST['password'];

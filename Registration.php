@@ -9,7 +9,7 @@
         $email = $_POST['email'];
         $mobile = $_POST['mobile'];
         $dob = $_POST['dob'];
-        $gender = $_POST['gender'];
+        $gender = isset($_POST['gender']) ? $_POST['gender'] : ''; 
         $hobby = $_POST['hobby'];
         $password = $_POST['password'];
         $cpassword = $_POST['cpassword'];
@@ -109,6 +109,7 @@
         }
     }
 ?>
+
 <html>
 <form method="POST" enctype="multipart/form-data">
     <label for="name">Name:</label><br>
@@ -137,18 +138,14 @@
     <label for="hobby">Hobby:</label><br>
     <input type="text" id="hobby" name="hobby" value="<?php echo isset($hobby) ? $hobby : ''; ?>"><br>
     <span class="error"><?php echo $hobbyErr;?></span><br>
-
     <label for="file">Images:</label><br>
     <input type="file" id="file" name="file[]" multiple><br><br>
-
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password"><br>
     <span class="error"><?php echo $passwordErr;?></span><br>
-
     <label for="cpassword">Confirm Password:</label><br>
     <input type="password" id="cpassword" name="cpassword"><br><br>
     <span class="error"><?php echo $cpasswordErr;?></span><br>
-
     <input type="submit" value="Submit" name="submit">
 </form>
 </html>

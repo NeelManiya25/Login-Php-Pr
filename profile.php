@@ -18,9 +18,10 @@
     $hobby = $row['hobby'];
     $password = $row['password'];
     $filenames = $row['images']; 
+
     $nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = $passwordErr = "";
-    
-    $imageList = json_decode($filenames, true);
+
+    $imageList = json_decode($filenames,true);
 
     if (isset($_POST['submit'])) {
         $full_name = $_POST['full_name'];
@@ -43,14 +44,14 @@
                 }
             }
         }
-        if (isset($_POST['delete_images'])) {
-            $deleteImages = $_POST['delete_images']; 
-            foreach ($deleteImages as $deleteImage) {
-                    if(!empty('unchecked' != $deleteImage )){     
-                if (($key = array_search($deleteImage, $imageList)) !== true) {
-                        if (file_exists('upload/'.$deleteImage)) {
-                            unlink('upload/'.$deleteImage); 
-                        }
+    if(isset($_POST['delete_images'])){
+        $deleteImages = $_POST['delete_images'];
+        foreach($deleteImages as $deleteImage){
+            if(!empty('unchecked' !== $deleteImage)){
+                if(($key = array_search($deleteImage,$imageList)) !== true){
+                    if(file_exists('upload/'.$deleteImage)){
+                        unlink('upload/'.$deleteImage);
+                    }
                     unset($imageList[$key]);
                 }
             }
@@ -116,35 +117,36 @@
                             echo "Error :".$sql1."<br>".mysqli_error($conn);
                         }
                 }
-            } else {
-                $sql = "UPDATE users SET
-                        `full_name` = '$full_name',
-                        `dob` = '$dob',
-                        `gender`= '$gender',
-                        `hobby` = '$hobby',
-                        `images` = '$filenames'
+            } 
+            else{
+                $sql = "UPDATE users SET 
+                        `full_name`  = '$full_name',
+                        `dob`        = '$dob',
+                        `gender`     = '$gender',
+                        `hobby`      = '$hobby',
+                        `images`     = '$filenames'
                         WHERE id = '$id'";
-                        if (mysqli_query($conn, $sql)) {
-                                header("Location: dashoboard.php");
-                        } else {
-                                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                        }
-            }   
+                    if(mysqli_query($conn,$sql)){
+                        header("Location:dashoboard.php");
+                    } else{
+                        echo "Error :" .$sql."<br>".mysqli_error($conn);
+                    }
+            } 
         }
     }
 ?>
 <form method="POST" enctype="multipart/form-data">  
     <label for="name">Name:</label><br>
-    <input type="text" id="name" name="full_name" value="<?php echo $full_name; ?>"><br><br>
+    <input type="text" id="name" name="full_name" value="<?php echo $full_name; ?>"><br>
     <span class="error"><?php echo  $nameErr;?></span><br>
     <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email" value="<?php echo $email; ?>"><br><br>
+    <input type="text" id="email" name="email" value="<?php echo $email; ?>">
     <span><?php echo $emailErr;?></span><br>
     <label for="mobile">Mobile Number:</label><br>
     <input type="tel" id="mobile" name="mobile" value="<?php echo $mobile;?>">
     <span><?php echo $mobileErr;?></span><br>
     <label for="date">Date of Birth:</label><br>
-    <input type="date" id="date" name="dob" value="<?php echo $dob; ?>"><br><br>
+    <input type="date" id="date" name="dob" value="<?php echo $dob; ?>">
     <span><?php echo $dobErr;?></span><br>
     <label for="gender">Gender:</label><br>
     <input type="radio" id="Male" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>>
@@ -153,10 +155,10 @@
     <label for="female">Female</label><br><br>
     <span><?php echo $genderErr;?></span>
     <label for="hobby">Hobby:</label><br>
-    <input type="text" id="hobby" name="hobby" value="<?php echo $hobby?>"><br><br>
+    <input type="text" id="hobby" name="hobby" value="<?php echo $hobby?>">
     <span><?php echo $hobbyErr;?></span><br>
-    <label for="file">Image:</label><br>
-    <input type="file" id="file" name="file[]" multiple><br><br>
+    <label for="file">Image:</label>
+    <input type="file" id="file" name="file[]" multiple>
     <?php  
     if($imageList){
         foreach($imageList as $image){
@@ -169,10 +171,10 @@
     ?>
     <br><br>
     <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password"><br><br>
+    <input type="password" id="password" name="password">
     <span><?php echo $passwordErr;?></span><br>
     <label for="cpassword">Confirm Password:</label><br>
-    <input type="password" id="cpassword" name="cpassword"><br><br>
+    <input type="password" id="cpassword" name="cpassword"><br>
     <span><?php echo $passwordErr; ?></span><br>
     <input type="submit" value="Submit" name="submit">
 </form> 

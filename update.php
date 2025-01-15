@@ -6,7 +6,7 @@ include('session.php');
 
 $id = $_GET['id'];
 $sql = "SELECT * FROM users WHERE id = $id";
-$result = mysqli_query($conn, $sql);
+$result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_assoc($result);
 
 $full_name = $row['full_name'];
@@ -27,37 +27,39 @@ if (isset($_POST['submit'])) {
     $gender = $_POST['gender'];
     $hobby = $_POST['hobby'];
 
-    if (!empty($_FILES['file']['name'][0])) {
-        foreach ($_FILES['file']['name'] as $key => $filename) {
-            $path = $_FILES['file']['name'][$key];
-            $newname = time() . "_" . $key;
-            $ext = pathinfo($path, PATHINFO_EXTENSION);
-            $newfileName = $newname . '.' . $ext;
-            if (move_uploaded_file($_FILES['file']['tmp_name'][$key], 'upload/' . $newfileName)) {
+    if(!empty($_FILES['file']['name'][0])){
+        foreach($_FILES['file']['name'] as $key =>$filename){
+            $path = $_FILES['files']['name'][$key];
+            $newname = time() ."_".$key;
+            $ext = pathinfo($path,PATHINFO_EXTENSION);
+            $newfileName = $newname.'.'.$ext;
+            if(move_uploaded_file($_FILES['file']['tmp_name'][$key],'upload/'.$newfileName)){
                 $imageList[] = $newfileName;
-            } else {
+            }else{
                 echo "Error in file upload.";
             }
         }
     }
-    if (isset($_POST['delete_images'])) {
+
+    if(isset($_POST['delete_images'])){
         $deleteImages = $_POST['delete_images'];
-        foreach ($deleteImages as $deleteImage) {
-            if(!empty('unchecked' != $deleteImage )){     
-                if (($key = array_search($deleteImage, $imageList)) !== false) {
-                    if (file_exists('upload/' . $deleteImage)) {
-                        unlink('upload/' . $deleteImage);
+        foreach($deleteImages as $deleteImage){
+            if(!empty('checked' != $deleteImage)){
+                if(($key = array_search($deleteImage,$imageList)) !== false){
+                    if(file_exists('upload/'.$deleteImage)){
+                        unlink('upload/'.$deleteImage);
                     }
-                    unset($imageList[$key]); 
+                    unset($imageList[$key]);
                 }
             }
         }
     }
-    if (empty($full_name)) {
+    if(empty($full_name)){
         $nameErr = "Name is required";
-    } elseif (!preg_match('/^[a-zA-Z ]*$/', $full_name)) {
+    } elseif(!preg_match('/^[a-zA-Z]*$/',$full_name)){
         $nameErr = "Invalid Name";
     }
+
     if (empty($email)) {
         $emailErr = "Email is required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -79,22 +81,23 @@ if (isset($_POST['submit'])) {
     } elseif (!preg_match("/^[a-zA-Z ]*$/", $hobby)) {
         $hobbyErr = "Invalid hobby";
     }
-
     if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
         $filenames = json_encode(array_values($imageList)); 
-        $updateSQL = "UPDATE users SET 
-                      `full_name` = '$full_name',
-                      `email` = '$email',
-                      `mobile` = '$mobile',
-                      `dob` = '$dob',
-                      `gender` = '$gender',
-                      `hobby` = '$hobby',
-                      `images` = '$filenames'
-                     WHERE id = '$id'";
+        $updateSQL = "UPDATE users SET
+                      `full_name`  = '$full_name',
+                      `email`      = '$email',
+                      `mobile`     = '$mobile',
+                      `dob`        = '$dob',
+                      `gender`     = '$gender',
+                      `hobby`      = '$hobby',
+                      `images`     = '$filenames'
+                        WHERE id = '$id'";
+
         if (mysqli_query($conn, $updateSQL)) {
             header("Location: dashoboard.php"); 
-        } else {
-            echo "Error: " . $updateSQL . "<br>" . mysqli_error($conn);
+        }
+        else{
+            echo "Error :" .$updateSQL. "<br>" .mysqli_error($conn);
         }
     }
 }
@@ -127,10 +130,9 @@ if (isset($_POST['submit'])) {
     <label for="hobby">Hobby:</label><br>
     <input type="text" id="hobby" name="hobby" value="<?php echo $hobby?>"><br><br>
     <span><?php echo $hobbyErr;?></span><br>
-    
+
     <label for="file">Images:</label><br>
     <input type="file" id="file" name="file[]" multiple>
-    
     <?php
     if ($imageList) {
         foreach ($imageList as $image) {

@@ -40,11 +40,11 @@ include("session.php");
     <br>
     <?php
         $sql = "SELECT * FROM users";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($conn,$sql);
     ?>
     <table>
         <tr>
-            <th>Sr. No.</th>
+            <th>Sr.No.</th>
             <th>Name</th>
             <th>Email</th>
             <th>Mobile</th>
@@ -55,11 +55,11 @@ include("session.php");
             <th>Action</th>
         </tr>
         <?php
-        $sr_no = 1;
-        while ($row = mysqli_fetch_assoc($result)) {
+        $s = 1;
+            while($row = mysqli_fetch_assoc($result)){
         ?>
         <tr>
-            <td><?php echo $sr_no++; ?></td>
+            <td><?php echo $s++; ?></td>
             <td><?php echo $row['full_name']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <td><?php echo $row['mobile']; ?></td>

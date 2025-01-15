@@ -21,6 +21,7 @@
     $nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = $passwordErr = "";
     
     $imageList = json_decode($filenames, true);
+
     if (isset($_POST['submit'])) {
         $full_name = $_POST['full_name'];
         $gender = $_POST['gender']; 
@@ -101,7 +102,7 @@
             $hashedPassword = md5($NewPassword);
             if (!empty($NewPassword)) {
                 if(!empty($passwordErr)){
-                $sql = "UPDATE users SET 
+                $sql1 = "UPDATE users SET 
                         `full_name` = '$full_name',
                         `dob` = '$dob',
                         `gender` = '$gender',
@@ -109,6 +110,11 @@
                         `images` = '$filenames',
                         `password` = '$hashedPassword'
                         WHERE id = '$id'";
+                        if(mysqli_query($conn,$sql1)){
+                            header("Location:login.php");
+                        }else{
+                            echo "Error :".$sql1."<br>".mysqli_error($conn);
+                        }
                 }
             } else {
                 $sql = "UPDATE users SET
@@ -118,13 +124,12 @@
                         `hobby` = '$hobby',
                         `images` = '$filenames'
                         WHERE id = '$id'";
+                        if (mysqli_query($conn, $sql)) {
+                                header("Location: dashoboard.php");
+                        } else {
+                                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                        }
             }   
-            
-            if (mysqli_query($conn, $sql)) {
-                header("Location: dashoboard.php");
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
         }
     }
 ?>

@@ -29,7 +29,7 @@ include("session.php");
         ?>
         </a> 
     </a>
-    <label style="margin-left:750;">Welcome,
+        <label style="margin-left:750px;">Welcome,
         <?php
             $sql = "SELECT * FROM users";
             $result = mysqli_query($conn,$sql);
@@ -71,7 +71,11 @@ include("session.php");
                     $imageList = $row['images'];
                     $imagejson = json_decode($imageList);
                     foreach ($imagejson as $image) {    
-                        echo '<img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
+                        echo '<a href="upload/'.$image.'" target="__blank">
+                        <img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">
+                        
+                        </a>
+                        ';
                     }
             ?>
             </td>

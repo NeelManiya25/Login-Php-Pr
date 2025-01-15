@@ -7,6 +7,9 @@ $id = $_GET['id'];
 $sql = "SELECT * FROM users WHERE id = $id";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
+// echo '<pre>';
+// print_r($row);
+// die();
 
 $full_name = $row['full_name'];
 $email = $row['email'];
@@ -14,9 +17,8 @@ $mobile = $row['mobile'];
 $dob = $row['dob'];
 $gender = $row['gender'];
 $hobby = $row['hobby'];
-$password = $row['password'];
 $images = $row['images']; 
-$nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = $passwordErr = "";
+$nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = "";
 $imageList = json_decode($images, true);
 
 if (isset($_POST['submit'])) {
@@ -26,8 +28,6 @@ if (isset($_POST['submit'])) {
     $dob = $_POST['dob'];
     $gender = $_POST['gender'];
     $hobby = $_POST['hobby'];
-    $NewPassword = $_POST['password'];
-    $cpassword = $_POST['cpassword'];
 
     if (!empty($_FILES['file']['name'][0])) {
         foreach ($_FILES['file']['name'] as $key => $filename) {
@@ -35,9 +35,6 @@ if (isset($_POST['submit'])) {
             $newname = time() . "_" . $key;
             $ext = pathinfo($path, PATHINFO_EXTENSION);
             $newfileName = $newname . '.' . $ext;
-            // echo '<pre>';
-            // print_r($newfileName);
-            // die();
             if (move_uploaded_file($_FILES['file']['tmp_name'][$key], 'upload/' . $newfileName)) {
                 $imageList[] = $newfileName;
             } else {
@@ -49,13 +46,7 @@ if (isset($_POST['submit'])) {
         $deleteImages = $_POST['delete_images']; 
         foreach ($deleteImages as $deleteImage) {
                 if(!empty('unchecked' != $deleteImage )){     
-                    // echo '<pre>';
-                    // print_r($deleteImage);
-                    // die();
-            if (($key = array_search($deleteImage, $imageList)) !== false) {
-                // echo '<pre>';
-                // print_r($key);
-                // die();
+            if (($key = array_search($deleteImage, $imageList)) !== true) {
                     if (file_exists('upload/'.$deleteImage)) {
                         unlink('upload/'.$deleteImage); 
                     }
@@ -90,18 +81,6 @@ if (isset($_POST['submit'])) {
     } elseif (!preg_match("/^[a-zA-Z ]*$/", $hobby)) {
         $hobbyErr = "Invalid hobby";
     }
-    if (!empty($NewPassword) || !empty($cpassword)) {
-        if ($NewPassword !== $cpassword) {
-            $passwordErr = "Passwords do not match";
-        } elseif (strlen($NewPassword) < 8) {
-            $passwordErr = "Password must be at least 8 characters";
-        } elseif (!preg_match("#[A-Z]+#", $NewPassword)) {
-            $passwordErr = "Password must contain at least 1 uppercase letter";
-        } elseif (!preg_match("#[a-z]+#", $NewPassword)) {
-            $passwordErr = "Password must contain at least 1 lowercase letter";
-        }
-    }
-
     if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr) && empty($passwordErr)) {
         $filenames = json_encode(array_values($imageList)); 
         $updateSQL = "UPDATE users SET 
@@ -111,12 +90,8 @@ if (isset($_POST['submit'])) {
                       `dob` = '$dob',
                       `gender` = '$gender',
                       `hobby` = '$hobby',
-                      `images` = '$filenames'";
-
-        if (!empty($NewPassword)) {
-            $updateSQL .= ", `password` = '$NewPassword'"; 
-        }
-        $updateSQL .= " WHERE id = '$id'";
+                      `images` = '$filenames'
+                     WHERE id = '$id'";
         if (mysqli_query($conn, $updateSQL)) {
             header("Location: dashoboard.php"); 
         } else {
@@ -129,30 +104,24 @@ if (isset($_POST['submit'])) {
     <label for="name">Name:</label><br>
     <input type="text" id="name" name="full_name" value="<?php echo $full_name; ?>"><br><br>
     <span class="error"><?php echo $nameErr;?></span><br>
-
     <label for="email">Email:</label><br>
     <input type="text" id="email" name="email" value="<?php echo $email; ?>"><br><br>
     <span><?php echo $emailErr;?></span><br>
-
     <label for="mobile">Mobile Number:</label><br>
     <input type="tel" id="mobile" name="mobile" value="<?php echo $mobile;?>">
     <span><?php echo $mobileErr;?></span><br>
-
     <label for="date">Date of Birth:</label><br>
     <input type="date" id="date" name="dob" value="<?php echo $dob; ?>"><br><br>
     <span><?php echo $dobErr;?></span><br>
-
     <label for="gender">Gender:</label><br>
     <input type="radio" id="Male" name="gender" value="Male" <?php echo ($gender == 'Male') ? 'checked' : ''; ?>>
     <label for="male">Male</label><br>
     <input type="radio" id="Female" name="gender" value="Female" <?php echo ($gender == 'Female') ? 'checked' : ''; ?>>
     <label for="female">Female</label><br><br>
     <span><?php echo $genderErr;?></span>
-
     <label for="hobby">Hobby:</label><br>
     <input type="text" id="hobby" name="hobby" value="<?php echo $hobby?>"><br><br>
     <span><?php echo $hobbyErr;?></span><br>
-
     <label for="file">Image:</label><br>
     <input type="file" id="file" name="file[]" multiple>
     <?php

@@ -1,15 +1,12 @@
 <?php
 include('connection.php');
 include('session.php');
-
-
 $nameErr = "";
 $emailErr = "";
 $mobileErr = "";
 $dobErr = "";
 $genderErr = "";
 $hobbyErr = "";
-
 if(isset($_POST['submit'])){
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
@@ -17,13 +14,10 @@ if(isset($_POST['submit'])){
     $dob = $_POST['dob'];
     $gender = $_POST['gender'];
     $hobby = $_POST['hobby'];
-
     $fileNames = [];
     $uploadDirectory = 'upload/';
-
     $emailCheckQuery = "SELECT * FROM users WHERE email = '$email'";
         $mobileCheckQuery = "SELECT * FROM users WHERE mobile = '$mobile'";
-
         $emailResult = mysqli_query($conn, $emailCheckQuery);
         if (!$emailResult) {
             die("Error Email: " . mysqli_error($conn));
@@ -38,13 +32,11 @@ if(isset($_POST['submit'])){
         if (mysqli_num_rows($mobileResult) > 0) {
             $mobileErr = "Mobile number is already taken!";
         }
-
     foreach ($_FILES['file']['name'] as $key => $value) {
         $fileTmpName = $_FILES['file']['tmp_name'][$key];
         $fileName = $_FILES['file']['name'][$key];
         $ext = pathinfo($fileName, PATHINFO_EXTENSION);
         $newFileName = time() . '_' . $key . '.' . $ext;
-        
         try {
             move_uploaded_file($fileTmpName, $uploadDirectory . $newFileName);
             $fileNames[] = $newFileName; 
@@ -52,53 +44,39 @@ if(isset($_POST['submit'])){
             echo 'Error: ' . $exception->getMessage();
         }
     }
-
     $filenewname = implode(',', $fileNames);
-    // echo '<pre>';
-    // print_r($filenewname);
-    // die();
-
     if (empty($full_name)) {
         $nameErr = "Name is required";
     } elseif (!preg_match('/^[a-zA-Z ]*$/', $full_name)) {
         $nameErr = "Invalid Name";
     }
-
     if (empty($email)) {
         $emailErr = "Email is required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $emailErr = "Invalid Email format";
     }
-
     if (empty($mobile)) {
         $mobileErr = "Mobile number is required";
     } elseif (!preg_match("/^[0-9]{10}$/", $mobile)) {
         $mobileErr = "Invalid mobile number";
     }
-
     if (empty($dob)) {
         $dobErr = "Date of birth is required";
     }
-
     if (empty($gender)) {
         $genderErr = "Gender is required";
     } elseif (!preg_match("/^[a-zA-Z]*$/", $gender)) {
         $genderErr = "Invalid gender";
     }
-
     if (empty($hobby)) {
         $hobbyErr = "Hobby is required";
     } elseif (!preg_match("/^[a-zA-Z ]*$/", $hobby)) {
         $hobbyErr = "Invalid hobby";
     }
-
     if (empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
         $filenewname = json_encode($fileNames);
-        
-
         $sql = "INSERT INTO users(`full_name`,`email`,`mobile`,`dob`,`gender`,`hobby`,`images`)
                 VALUES ('$full_name','$email','$mobile','$dob','$gender','$hobby','$filenewname')";
-
         if(mysqli_query($conn,$sql)){
             header("Location:dashoboard.php");
         } else{

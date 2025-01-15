@@ -1,2 +1,0 @@
-Error: UPDATE users SET full_name = 'Neel Maniya', dob = '2004-08-25', gender = 'Male', hobby = 'bike ride', images = '["1736765190.jpg","[\"1736765190.jpg\"]"]' WHERE id = '173'
-Invalid JSON text: "Missing a comma or ']' after an array element." at position 21 in value for column 'users.images'.

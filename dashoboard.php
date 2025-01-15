@@ -1,3 +1,4 @@
+
 <?php
 include("connection.php");
 include("session.php");
@@ -5,7 +6,7 @@ include("session.php");
 <html>
     <style>
         table, th, td {
-            border: 2px, solid;
+            border: 2px solid;
         }
     </style>
     <h2>Dashboard</h2>
@@ -15,7 +16,7 @@ include("session.php");
     </a>
     <?php
           $sql = "SELECT * FROM users";
-          $result = mysqli_query($conn,$sql);
+          $result = mysqli_query($conn, $sql);
           $row = mysqli_fetch_assoc($result);
     ?>
     <a href="profile.php?id=<?php echo $_SESSION['id'];?>" style="margin-left:1200px">
@@ -24,20 +25,18 @@ include("session.php");
             $imageList = $row['images'];
             $imagejson = json_decode($imageList);
             foreach ($imagejson as $image) {    
-                echo '<img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">';
+                echo '<img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">';
             }
         ?>
         </a> 
     </a>
         <label style="margin-left:750px;">Welcome,
         <?php
-            $sql = "SELECT * FROM users";
-            $result = mysqli_query($conn,$sql);
-            if(isset($_SESSION['full_name'])){
+            if (isset($_SESSION['full_name'])) {
                 echo $_SESSION['full_name'];
             }
         ?>
-    </label>
+        </label>
     <br>
     <?php
         $sql = "SELECT * FROM users";
@@ -45,7 +44,7 @@ include("session.php");
     ?>
     <table>
         <tr>
-            <th>ID</th>
+            <th>Sr. No.</th>
             <th>Name</th>
             <th>Email</th>
             <th>Mobile</th>
@@ -55,11 +54,12 @@ include("session.php");
             <th>Image</th>
             <th>Action</th>
         </tr>
-        <?php 
-            while ($row = mysqli_fetch_assoc($result)) {
+        <?php
+        $sr_no = 1;
+        while ($row = mysqli_fetch_assoc($result)) {
         ?>
         <tr>
-            <td><?php echo $row['id']; ?></td>
+            <td><?php echo $sr_no++; ?></td>
             <td><?php echo $row['full_name']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <td><?php echo $row['mobile']; ?></td>
@@ -72,10 +72,8 @@ include("session.php");
                     $imagejson = json_decode($imageList);
                     foreach ($imagejson as $image) {    
                         echo '<a href="upload/'.$image.'" target="__blank">
-                        <img src="upload/'.$image.'"style="height:40px;width:40px;margin-right:20px;">
-                        
-                        </a>
-                        ';
+                        <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
+                        </a>';
                     }
             ?>
             </td>

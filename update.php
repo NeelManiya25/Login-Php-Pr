@@ -9,28 +9,29 @@ $sql = "SELECT * FROM users WHERE id = $id";
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_assoc($result);
 
-$full_name = $row['full_name'];
-$email = $row['email'];
-$mobile = $row['mobile'];
-$dob = $row['dob'];
-$gender = $row['gender'];
-$hobby = $row['hobby'];
-$images = $row['images'];
+$full_name = isset($row['full_name']) ? $row['full_name'] : '';
+$email = isset($row['email']) ? $row['email'] : '';
+$mobile = isset($row['mobile']) ? $row['mobile'] : '';
+$dob = isset($row['dob']) ? $row['dob'] : '';
+$gender = isset($row['gender']) ? $row['gender'] : '';
+$hobby = isset($row['hobby']) ? $row['hobby'] : '';
+$images = isset($row['images']) ? $row['images'] : '';
+
 $nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = "";
 
 $imageList = json_decode($images,true);
 
 if (isset($_POST['submit'])) {
     $full_name = $_POST['full_name'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
+    // $email = $_POST['email'];
+    // $mobile = $_POST['mobile'];
     $dob = $_POST['dob'];
     $gender = isset($_POST['gender']) ? $_POST['gender'] : ''; 
     $hobby = $_POST['hobby'];
 
     if(!empty($_FILES['file']['name'][0])){
         foreach($_FILES['file']['name'] as $key =>$filename){
-            $path = $_FILES['files']['name'][$key];
+            $path = $_FILES['file']['name'][$key];
             $newname = time() ."_".$key;
             $ext = pathinfo($path,PATHINFO_EXTENSION);
             $newfileName = $newname.'.'.$ext;
@@ -48,13 +49,14 @@ if (isset($_POST['submit'])) {
             if(!empty('checked' != $deleteImage)){
                 if(($key = array_search($deleteImage,$imageList)) !== false){
                     if(file_exists('upload/'.$deleteImage)){
-                        unlink('upload/'.$deleteImage);
+                        unlink('upload/'.$deleteImage); 
                     }
-                    unset($imageList[$key]);
+                    unset($imageList[$key]); 
                 }
             }
         }
     }
+
     if (empty($full_name)) {
         $nameErr = "Name is required";
     } elseif (!preg_match('/^[a-zA-Z ]*$/', $full_name)) {
@@ -82,22 +84,25 @@ if (isset($_POST['submit'])) {
     } elseif (!preg_match("/^[a-zA-Z ]*$/", $hobby)) {
         $hobbyErr = "Invalid hobby";
     }
+
     if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
-        $filenames = json_encode(array_values($imageList)); 
+        $filenames = json_encode(array_values($imageList));
+        
         $updateSQL = "UPDATE users SET
                     `full_name`    = '$full_name',
-                    `email`        = '$email',
-                    `mobile`       = '$mobile',
+                --    `email`        = '$email',
+                --     `mobile`       = '$mobile',
                     `dob`          = '$dob',
                     `gender`       = '$gender',
                     `hobby`        = '$hobby',
                     `images`       = '$filenames'
                     WHERE id = '$id'";
+
         if(mysqli_query($conn,$updateSQL)){
             header("Location:dashoboard.php");
         }
         else{
-            echo "Error :" .$updateSQL. "<br>" .mysqli_error($conn);
+            echo "Error: " . $updateSQL . "<br>" . mysqli_error($conn);
         }
     }
 }
@@ -127,15 +132,14 @@ if (isset($_POST['submit'])) {
     <label for="file">Images:</label><br>
     <input type="file" id="file" name="file[]" multiple>
     <?php
-    if($imageList){
-        foreach($imageList as $image){
-            echo '<input type="checkbox" name="delete_images[]" value="'.$image.'"checked>
-                <img src="upload/'.$image.'"style="height:40px;width: 40px;margin-right:20px;">';
-
+        if($imageList){
+            foreach($imageList as $image){
+                echo '<input type="checkbox" name="delete_images[]" value="'.$image.'" checked>
+                        <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">';
+            }
+        } else{
+            echo "No images found.";
         }
-    } else{
-        echo "No images found.";
-    }
     ?>
     <br><br>
     <input type="submit" value="Submit" name="submit">

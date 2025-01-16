@@ -13,7 +13,6 @@ include("session.php");
     <a href="logout.php" style="margin-left:1400px;">
         <button>Logout</button>
     </a>
-    
     <a href="profile.php?id=<?php echo $_SESSION['id'];?>" style="margin-left:1200px">
         <button>Edit Profile</button>  
         <?php
@@ -27,26 +26,20 @@ include("session.php");
             }
         ?>
     </a> 
-
-    <label style="margin-left:750px;">Welcome, 
+    <label style="margin-left:750px;">Welcome,
         <?php
-            if(isset($_SESSION['full_name'])){
-                echo $_SESSION['full_name'];
-            }
+        if(isset($_SESSION['full_name'])){
+            echo $_SESSION['full_name'];
+        }
         ?>
     </label>
     <br>
-
-    <?php
-    $sql = "SELECT * FROM users WHERE id = '".$_SESSION['id']."'";
-    $result = mysqli_query($conn, $sql);
-    $user = mysqli_fetch_assoc($result); 
-    ?>
     <?php
     if ($_SESSION['login_success'] == 'admin') {
-        $sql = "SELECT * FROM users"; 
+        $sql = "SELECT * FROM users WHERE id != '".$_SESSION['id']."'"; 
         $result = mysqli_query($conn, $sql);
-    ?>
+        ?>
+      <?php   ?>
         <table>
             <tr>
                 <th>Sr.No.</th>
@@ -60,9 +53,9 @@ include("session.php");
                 <th>Action</th>
             </tr>
             <?php
-            $s = 1;
-            while($row = mysqli_fetch_assoc($result)){
-                if ($row['id'] != $_SESSION['id']) {
+                if (mysqli_num_rows($result)) {
+                $s = 1;
+                while($row = mysqli_fetch_assoc($result)){
             ?>
                 <tr>
                     <td><?php echo $s++; ?></td>
@@ -76,24 +69,27 @@ include("session.php");
                         <?php
                             $imageList = $row['images'];
                             $imagejson = json_decode($imageList);
-                            foreach ($imagejson as $image) {    
+                            foreach($imagejson as $image){
                                 echo '<a href="upload/'.$image.'" target="__blank">
-                                <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
-                                </a>';
+                                        <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
+                                        </a>';
                             }
                         ?>
                     </td>
                     <td>
-                        <a href="delete.php?id=<?php echo $row['id']; ?>">Delete</a>&nbsp;
+                        <a href="delete.php?id=<?php echo $row['id'];?>">Delete</a>&nbsp;
                         <a href="update.php?id=<?php echo $row['id']; ?>">Edit</a>
                     </td>
                 </tr>
             <?php
-                }
-            }
+                    
+                
+                    }
             ?>
         </table>
-    <?php
+    <?php    } else {
+        echo "No records found."; 
     }
-    ?>
+}
+?>
 </html>

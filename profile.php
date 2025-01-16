@@ -10,14 +10,16 @@
     $row = mysqli_fetch_assoc($result);
 
     $newPassword = "";
-    $full_name = $row['full_name'];
-    $email = $row['email'];
-    $mobile = $row['mobile'];
-    $dob = $row['dob'];
-    $gender = $row['gender'];
-    $hobby = $row['hobby'];
-    $password = $row['password'];
-    $filenames = $row['images']; 
+
+$full_name = isset($row['full_name']) ? $row['full_name'] : '';
+$email = isset($row['email']) ? $row['email'] : '';
+$mobile = isset($row['mobile']) ? $row['mobile'] : '';
+$dob = isset($row['dob']) ? $row['dob'] : '';
+$gender = isset($row['gender']) ? $row['gender'] : '';
+$hobby = isset($row['hobby']) ? $row['hobby'] : '';
+
+$password = isset($row['password']) ? $row['password'] : '';
+$filenames = isset($row['images']) ? $row['images'] : '';
 
     $nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = $passwordErr = "";
 

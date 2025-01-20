@@ -1,6 +1,13 @@
 <?php
 include("connection.php");
-include("session.php");
+include("session.php"); 
+
+$records_per_page = 10;
+
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$start_from = ($page - 1) * $records_per_page;
+
 ?>
 <html>
     <style>
@@ -36,10 +43,9 @@ include("session.php");
     <br>
     <?php
     if ($_SESSION['login_success'] == 'admin') {
-        $sql = "SELECT * FROM users WHERE id != '".$_SESSION['id']."'"; 
+        $sql = "SELECT * FROM users WHERE id != '".$_SESSION['id']."' LIMIT $start_from, $records_per_page"; 
         $result = mysqli_query($conn, $sql);
         ?>
-      <?php   ?>
         <table>
             <tr>
                 <th>Sr.No.</th>
@@ -54,11 +60,11 @@ include("session.php");
             </tr>
             <?php
                 if (mysqli_num_rows($result)) {
-                $s = 1;
-                while($row = mysqli_fetch_assoc($result)){
+                    $s = $start_from + 1;  
+                    while($row = mysqli_fetch_assoc($result)){
             ?>
                 <tr>
-                    <td><?php echo $s++; ?></td>
+                    <td><?php echo $s++;?></td>
                     <td><?php echo $row['full_name']; ?></td>
                     <td><?php echo $row['email']; ?></td>
                     <td><?php echo $row['mobile']; ?></td>
@@ -71,8 +77,8 @@ include("session.php");
                             $imagejson = json_decode($imageList);
                             foreach($imagejson as $image){
                                 echo '<a href="upload/'.$image.'" target="__blank">
-                                        <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
-                                        </a>';
+                                    <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
+                                    </a>';
                             }
                         ?>
                     </td>
@@ -82,14 +88,38 @@ include("session.php");
                     </td>
                 </tr>
             <?php
-                    
-                
                     }
-            ?>
+                ?>
         </table>
-    <?php    } else {
-        echo "No records found."; 
+
+        <?php
+        $sql_total = "SELECT COUNT(*) FROM users WHERE id != '".$_SESSION['id']."'";
+        $result_total = mysqli_query($conn, $sql_total);
+        $row_total = mysqli_fetch_row($result_total);
+        $total_records = $row_total[0];
+        $total_pages = ceil($total_records / $records_per_page);
+
+        echo "<div style='text-align:center;'>";
+        if ($page > 1) {
+            echo "<a href='dashoboard.php?page=" . ($page - 1) . "'>Prev</a> ";
+        }
+
+        for ($i = 1; $i <= $total_pages; $i++) {
+            if ($i == $page) {
+                echo "<strong>$i</strong> "; 
+            } else {
+                echo "<a href='dashoboard.php?page=$i'>$i</a> ";
+            }
+        }
+        if ($page < $total_pages) {
+            echo "<a href='dashoboard.php?page=" . ($page + 1) . "'>Next</a>";
+        }
+        echo "</div>";
+    } else {
+        echo "<p style=margin-left:300px>No records found.</p>"; 
     }
+    echo $total_records;
 }
 ?>
+
 </html>

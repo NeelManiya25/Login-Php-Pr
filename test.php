@@ -1,279 +1,471 @@
 <?php
-// include("connection.php");
+include("connection.php");
 
+// class Fruit{
+//   public $name;
+//   public $color;
 
-// mysqli_autocommit($conn, False);
-
-// mysqli_query($conn, "insert into users values('yug', 'Male', 'yugmaniya@gmail.com')");
-// mysqli_query($conn, "insert into players values('het', 'Male', 'hetmaniya@gmail.com')");
-
-// mysqli_autocommit($conn, TRUE);
-// mysqli_close($conn);
-// $debug = mysqli_debug("T:n:t:m:x:F:L:o,/sample.txt");
-// print($debug);
-
-
-// $conn = mysqli_connect("localhost","root","","user_login");
-// mysqli_dump_debug_info($conn);
-// echo '<pre>';
-// print_r($conn);
-// die();
-
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-// if (!$mysqli -> query("INSERT INTO users (`full_name`) VALUES ('neel')")) {
-//   echo("Error description: " . $mysqli -> error);
-// }
-
-// $mysqli -> close();
-
-// $con=mysqli_connect("localhost","root","","user_login");
-
-// if (mysqli_connect_errno()) {
-//   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-//   exit();
-// }
-
-// if (!mysqli_query($con,"INSERT INTO users (`full_name`) VALUES ('Glenn')")) {
-//   print_r(mysqli_error_list($con));
-// }
-
-// mysqli_close($con);
-
-// Numeric/Indexed Array
-
-// $fruit = array("Mango", "Papaya", "Orange");
-// echo "I would like to eat " . $fruit[0] . ", " . $fruit[1] . " and " . $fruit[2] . ".";
-
-
-// $con=mysqli_connect("localhost","root","","user_login");
-
-// mysqli_dump_debug_info($con);
-// echo '<pre>';
-// print_r($con);
-// die();
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-
-// $sql = "SELECT full_name, mobile,email,dob,hobby,gender,images FROM users ORDER BY full_name";
-// $result = $mysqli -> query($sql);
-// $row = $result -> fetch_array(MYSQLI_NUM);
-// echo '<pre>';
-// print_r($row);
-// die();
-
-
-// $row = $result -> fetch_array(MYSQLI_ASSOC);
-// echo '<pre>';
-// print_r($row);
-// die();
-// printf ("%s (%s)\n", $row["full_name"],$row["mobile"],$row["email"],$row["dob"],$row["hobby"],$row["gender"],$row["images"]);
-// $result -> free_result();
-// $mysqli -> close();
-
-
-
-// $con = mysqli_connect("localhost","root","","user_login");
-
-
-// mysqli_query($con, "INSERT INTO users values('Sikhar', 'sikhar@gmail.com', '9979042987', '25-08-2004','car driving','Male')");
-// mysqli_query($con, "INSERT INTO users values('Jonathan', 'Jonathan@gmail.com', '9428141441', '29-12-2005','bike rider','Male')");
-// mysqli_query($con, "INSERT INTO users values('Kumara', 'kumara@gmail.com', '7567742987', '01-02-2004','Golf','Male')");
-// print("Record Inserted.....\n");
-
-// $res = mysqli_query($con, "SELECT * FROM users");
-
-// while($info = mysqli_fetch_field($res)){
-//    $currentfield = mysqli_field_tell($res);
-//    print_r("Current Field: ".$currentfield."\n");
-//    print_r("Name: ".$info->name."\n");
-
-// }
-
-// mysqli_free_result($res);
-
-// mysqli_close($con);
-
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-
-// $sql = "SELECT full_name,email,mobile,dob,hobby,gender,images FROM users ORDER BY full_name";
-
-
-// if ($result = $mysqli -> query($sql)) {
-//   while ($filedinfo = $result -> fetch_assoc()) {
-//     echo '<pre>';
-//     print_r($filedinfo);
-//     die();
-//     print_r("Name: %s\n", $filedinfo -> full_name);
-//     print_r("Table: %s\n", $filedinfo -> table);
-//     print_r("Max. Len: %d\n", $filedinfo -> max_length);
+//   function __construct($name,$color){
+//     $this->name = $name;
+//     $this->color = $color;
 //   }
-//   $result -> free_result();
-// }
-
-// $mysqli -> close();
-
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-
-// $sql = "SELECT * FROM users ORDER BY full_name";
-
-// if ($result = $mysqli -> query($sql)) {
-//   $row = $result -> fetch_row();
-//   foreach ($result -> lengths as $i => $val) {
-//     echo '<pre>';
-//     printf("Field %2d has length: %2d\n", $i + 1, $val);
+//   function get_name(){
+//     return $this->name;
 //   }
-//   $result -> free_result();
-// }
-
-// $mysqli -> close();
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-
-// $sql = "SELECT full_name,mobile FROM users ORDER BY full_name";
-
-// if ($result = $mysqli -> query($sql)) {
-//   while ($obj = $result -> fetch_object()) {
-//     echo '<pre>';
-//     printf("%s (%s)\n", $obj->full_name, $obj->mobile);
+//   function get_color(){
+//     return $this->color;
 //   }
-//   $result -> free_result();
 // }
+// $apple = new Fruit("Apple","red");
+// echo $apple->get_name();
+// echo "<br>";
+// echo $apple->get_color();
 
-// $mysqli -> close();
+// Class and Object () Example
+ 
+// class calculation{
+//   public $a,$b,$c;
 
-
-// $mysqli = new mysqli("localhost","root","","user_login");
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
-// }
-// $sql = "SELECT full_name , dob FROM users ORDER BY full_name";
-// if ($result = $mysqli -> query($sql)) {
-//   while ($row = $result -> fetch_row()) {
-//     echo '<pre>';
-//     printf ("%s (%s)\n", $row[0], $row[1]);
+//   function sum(){
+//     $this->c = $this->a + $this->b;
+//     return $this->c;
 //   }
-//   $result -> free_result();
-// }
-// $mysqli -> close();
-
-// $con = mysqli_connect("localhost","root","","user_login");
-
-// if (mysqli_connect_errno()) {
-//   echo "Failed to connect to MySQL: " . mysqli_connect_error();
-//   exit();
-// }
-
-// $sql = "SELECT full_name , dob FROM users ORDER BY full_name";
-
-// if ($result = mysqli_query($con, $sql)) {
-
-//   while ($row = mysqli_fetch_row($result)) {
-//     echo '<pre>';
-//     printf ("%s (%s)\n", $row[0], $row[1]);
+//   function sub() {
+//     $this->c = $this->a-$this->b;
+//     return $this->c;
 //   }
-//   mysqli_free_result($result);
-// }   
-// mysqli_close($con);
-
-
-// $con = mysqli_connect("localhost","root","","user_login");
-// $mysqli = "";
-// if($mysqli -> connect_errorno){
-//     echo "Failed to connect to MySQL :".$mysqli ->connect_error;
-//     exit();
 // }
-// $mysqli ->query("SELECT * FROM users");
-// $mysqli ->field_count();
-// $mysqli -> close();
+// $c1 = new calculation();
+// $c1->a = 20;
+// $c1->b = 10;
 
-// $mysqli = new mysqli("localhost","root","","user_login");
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
+// $c2 =  new calculation();
+// $c2->a = 50;
+// $c2->b = 35;
+
+// echo "C1 Valaues: ". $c1->sum() . "\n";
+// echo "C2 Valaues: ". $c2->sub();
+
+// constructon
+
+// class person{
+//   public $name;
+//   public $age;
+
+//   function __construct($name = "No name",$age = 0){
+//     $this->name = $name;
+//     $this->age = $age;
+//   }
+//   function show(){
+//     echo $this->name ."-".$this->age ."<br>";
+//   }
 // }
-// var_dump($mysqli -> get_charset());
-// $mysqli -> close();
+// $p1 = new person();
+// $p2 = new person("Ram kumar",15);
+// $p3 = new person("Neel Maniya",22);
+// $p1->show();
+// $p2->show();
+// $p3->show();
 
-// $mysqli = new mysqli("localhost","root","","user_login");
-// if($mysqli ->connect_errno){
-//     echo "Failed to connect to MySQL:".$mysqli->connect_error;
-//     exit();
-// }
-// var_dump($mysqli->get_charset());
-// $mysqli->close();
+// Inheritance
 
+// class employee{
+//   public $name;
+//   public $age;
+//   public $salary;
 
-// echo mysqli_get_client_info();
-// $con = mysqli_connect("localhost","root","","user_login");
-// echo '<pre>';
-// print_r(mysqli_get_client_stats());
-
-
-// echo mysqli_get_client_version();
-
-// $con = mysqli_connect("localhost","root","","user_login");
-
-// if (mysqli_connect_errno()) {
-//     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-//     exit();
+//   function __construct($n,$a,$s){
+//     $this->name = $n;
+//     $this->age = $a;
+//     $this->salary = $s;
 //   }
   
-//   echo mysqli_get_host_info($con);
+//   function info(){
+//     echo "<h3>Employee Profile</h3>";
+//     echo "Employee Name :".$this->name."<br>";
+//     echo "Employee Age  :".$this->age."<br>";
+//     echo "Employee salary:".$this->salary."<br>";
+//   }
+// }
+// class manager extends employee{
+//   function __construct(){
+//     echo "Manager Constructor";
+//   }
+// }
+
+
+// $e1 = new employee("Ram",25,2000);
+
+// $e1->info();
+
+// class base{
+//   public  $name;
+//   public function __construct($n){
+//           $this->name = $n;
+//   }
+//   public function show(){
+//     echo "Your name:".$this->name."<br>";
+//   }
+// }
+//   $test = new base("Yahoo Baba");
+//   $test->name = "Baba Yahoo";
+//   $test->show();
+
+
+// overriding Methods & ProPerties
+
+// class base{
+
+//   public $name = "Parent Class";
+
+//   public function calc($a,$b){
+//     return $a*$b;
+//   }
+
+// }
+// class derived extends base{
+
+//   public $name = "Child Class";
+//   public function calc($a,$b){
+//     return $a+$b;
+//   }
+
+// }
+
+// $test = new derived();
+
+// echo $test->calc(2,10);
+
+
+// abstract
+// abstract class parentclass{
+//   public $name;
+//   abstract protected function calc($a,$b);
+// }
+//   class childClass extends parentclass{
+//     public function calc($c,$d){
+//       // echo $c+$d;
+//       echo "Hello Neel";
+//     }
+//   }
+//   $test = new childClass();
+//   $test->calc(10,20);
+
+
+// interface parent1{
+//   public function calc($a,$b);
+// }
+// interface parent2{
+//   public function sub($a,$b);
+// }
+// class childClass implements parent1, parent2{
+//   public function calc($a,$b){
+//     echo $a+$b;
+//   }
+//   public function sub ($c,$d){
+//     echo $c-$d;
+//   }
+// }
+// $test = new childClass();
+// $test->calc(20,20);
+
+// echo "<br>";
+
+// $test->sub(20,15);
+
+// class MyClass {
+//   public static $str = "Hello World!";
   
-//   mysqli_close($con);
-
-
-//   $mysqli = new mysqli("localhost","root","","user_login");
-
-// if ($mysqli -> connect_errno) {
-//   echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-//   exit();
+//   public static function hello() {
+//     echo MyClass::$str;
+//   }
 // }
+// echo MyClass::$str;
+// echo "<br>";
+// echo MyClass::hello();
 
-// echo $mysqli -> server_version;
+// class MyClass{
+//   public static $str = "Hello Neel Maniya";
 
-// $mysqli -> close();
-
-
-// echo $mysqli -> server_version;
-
-// $con = mysqli_init();
-// if (!$con) {
-//   die("mysqli_init failed");
+//   public static function hello(){
+//     echo MyClass::$str;
+//   }
 // }
+// echo MyClass::$str;
+// echo "<br>";
 
-// if (!mysqli_real_connect($con,"localhost","root","","user_login")) {
-//   die("Connect Error: " . mysqli_connect_error());
+// class base{
+//   public static $name = "Yahoo Baba";
 // }
+// class derived extends base{
+//   public static function show(){
+//     echo parent::$name;
+//   }
+// }
+// $test = new derived();
+// $test->show();
+// class base{
+//   protected static $name = "Yahoo ";
+//   public function show(){
+//     echo self::$name;
+//       echo static::$name;
+//   }
+//   }
+//   class derived extends base{
+//     protected static $name = "Baba";
+//   }
+//   $test = new derived();
+//   $test->show();
 
-// mysqli_close($con);
+
+// trait hello{
+//   public function sayhello(){
+//     echo "Hello! Neel L Maniya";
+//       } 
+//   }
+//   class base {
+//     use hello;
+//   }
+//   $test = new base();
+//   $test->sayhello();
+
+
+// trait hello{
+//   private function sayhello(){
+//     echo "Hello from Hello Trait.\n";
+//   }
+// }
+// class base{
+//   use hello {
+//     hello::sayhello as public newhello;
+//   }
+// }
+// $test = new base();
+
+// $test->newhello();
+
+// function fruits (array $names){
+//   foreach ($names as $name){
+//     echo $name."<br>";
+//   }
+// }
+// $test = ["Apple","Avocado","Strawberry"];
+// fruits($test);
+
+// class school{
+//   public function getNames($names){
+//     foreach($names -> Names() as $name){
+//       echo $name."<br>";
+//     }
+//   }
+// }
+// class student{
+//   public function Names(){
+//     return ["Ram","Krishan","Gopal","het","Vasu"];
+//   }
+// }
+// $stu = new student();
+// $sch = new school();
+
+// $sch->getNames($stu);
+
+// class abc{
+//   public function first(){
+//     echo "This is first function";
+//     echo "<br>";
+//     return $this;
+//   }
+//   public function second(){
+//     echo "This is second function";
+//     echo "<br>";
+//     return $this;
+//   }
+
+//   public function third(){
+//     echo "This is third function";
+//     echo "<br>";
+//   }
+// }
+// $test = new abc();
+// $test ->first()->second()->third();
+
+
+// class abc {
+//   public  function __construct(){
+//     echo "<br>";
+//     echo "This is Construct function";
+//   }
+//   public function hello(){
+//     echo "<br>";
+//     echo "Hello Everyone\n";
+//   }
+//   public function __destruct(){
+//     echo "<br>";
+//     echo "This is destruct function \n";
+//   }
+// }
+// $test = new abc();
+// $test->hello();
+
+// class Fruit{
+//   var $name;
+//   var $color;
+//   function __construct($name,$color){
+//     $this->name = $name;
+//     $this->color = $color;
+//   }
+//   function __destruct(){
+//     echo "The fruit is {$this->name} and the color is {$this->color}.";
+//   }
+// }
+// $apple = new Fruit();
+
+//  --- Get Method ---
+
+// class abc{
+//   private $data = ["name"=>"Neel Maniya","course"=>"PHP","fee"=>2000];
+//   public function __get($key){
+//     if(array_key_exists($key,$this->data)){
+//       return $this->data[$key];
+//     }else{
+//       return "This key($key) is not defined";
+//     }
+//   }
+// }
+// $test = new abc();
+// echo $test->age;
+
+// --- set Method ---
+
+// class student{
+//   private $name;
+//   public function __get($property){
+//     echo "Your are trying to access Non existing or private property($property)\n";
+//   }
+//   public function __set($property,$value){
+//     if(property_exists($this,$property)){
+//       $this->$property = $value;
+//     } else{
+//       echo "Property does not exist : $property";
+//     }
+//   }
+// }
+// $test = new student();
+// $test->name = "Neel Maniya";
+
+
+// --- call Method---
+
+// class student{
+//   private $first_name;
+//   private $last_name;
+
+//   private function setName($fname,$lname){
+//     $this->first_name = $fname;
+//     $this->last_name = $lname;
+//   }
+//   public function __call($method,$args){
+//     if(method_exists($this,$method)){
+//       call_user_func_array([$this,$method],$args);
+//     }else{
+//       echo "Method does not exist:$method";
+//     }
+//   }
+// }
+// $test = new student();
+// $test->setName("Neel L","Maniya");
+
+// echo "<pre>";
+// print_r($test);
+// echo "<pre>";
+
+// --- CallStatic Method ex ---
+// class Student{
+//   private static function hello($name){
+//     echo "Hello $name";
+//   }
+//   public static function __callStatic($method, $args){
+//     if(method_exists(__class__,$method)){
+//       call_user_func_array([__class__,$method],$args);
+//     } else{
+//       echo "Method does not exist: $method";
+//     }
+//   }
+// }
+// Student::hello("Neel L Maniya");
+
+
+// __isset Method Ex
+
+// class student {
+//   public $course;
+//   private $first_name;
+//   private $last_name;
+//   private $detail = ['name'=>'Test Name','age' =>'20'];
+
+//   public function setName($fname,$lname)
+//   {
+//     $this->first_name = $fname;
+//     $this->last_name = $lname;
+//   }
+
+//   public function __isset($name){
+//     echo isset($this->detail[$name]);
+//   }
+// }
+// $test = new student();
+// echo isset($test->age);
+
+
+//  unset Method Ex
+// class student {
+//   public  $course = "PHP";
+//   private $first_name;
+//   private $last_name;
+
+//   public function setName($fname,$lname){
+//     $this->first_name = $fname;
+//     $this->last_name = $lname;
+//   }
+//   public function __unset($property){
+//     unset($this->$property);
+//   }
+// }
+// $test = new student();
+// $test->setName("Neel","Maniya");
+// unset($test->course);
+// print_r($test);
+
+// echo "<br>";
+
+//  __tostring Method
+
+// class abc{
+//   public function __toString(){
+//     return "Can't Print object as a string of class:".get_class($this);
+//   }
+// }
+// $test = new abc();
+// echo $test;
+// echo "<br>";
+
+// __sleep Method 
+class student {
+  public $course = "PHP";
+  private $first_name;
+  private $last_name;
+
+  public function setName($fname,$lname){
+    $this->first_name = $fname;
+    $this->last_name = $lname;
+  }
+  public function __sleep(){
+    return array('first_name','last_name');
+  }
+}
+$obj = new student();
+$obj->setName("Neel","Maniya");
+$srl = serialize($obj);
+echo $srl;
+
 ?>

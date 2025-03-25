@@ -50,7 +50,7 @@ if (isset($_GET['search'])) {
     </a> 
     <label style="margin-left:750px;">Welcome,
         <?php
-        if (isset($_SESSION['full_name'])) {
+        if(isset($_SESSION['full_name'])){
             echo $_SESSION['full_name'];
         }
         ?>
@@ -59,7 +59,7 @@ if (isset($_GET['search'])) {
 
     <?php
     if ($_SESSION['login_success'] == 'admin') {
-        $sql = "SELECT * FROM users WHERE id != '".$_SESSION['id']."' $search_query LIMIT $start_from, $records_per_page"; 
+        $sql = "SELECT * FROM users WHERE id !='".$_SESSION['id']."' $search_query LIMIT $start_from,$records_per_page";
         $result = mysqli_query($conn, $sql);
         ?>
         <table>
@@ -91,7 +91,7 @@ if (isset($_GET['search'])) {
                         <?php
                             $imageList = $row['images'];
                             $imagejson = json_decode($imageList);
-                            foreach($imagejson as $image) {
+                            foreach($imagejson as $image){
                                 echo '<a href="upload/'.$image.'" target="__blank">
                                     <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">
                                     </a>';
@@ -99,7 +99,7 @@ if (isset($_GET['search'])) {
                         ?>
                     </td>
                     <td>
-                        <a href="delete.php?id=<?php echo $row['id'];?>">Delete</a>&nbsp;
+                         <a href="delete.php?id=<?php echo $row['id'];?>"Delete></a>&nbsp;
                         <a href="update.php?id=<?php echo $row['id']; ?>">Edit</a>
                     </td>
                 </tr>
@@ -136,7 +136,6 @@ if (isset($_GET['search'])) {
     if(!empty($total_records)){
         echo "<div style='margin-left:1450px;font-size:30px;'>$total_records</div>";
     }
-   
 }
 ?>
 </html>

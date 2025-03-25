@@ -5,6 +5,7 @@
     $nameErr = $emailErr = $mobileErr = $dobErr = $genderErr = $hobbyErr = $passwordErr = $cpasswordErr = "";
 
     if(isset($_POST['submit'])){
+        
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
         $mobile = $_POST['mobile'];
@@ -82,30 +83,30 @@
         } elseif($password !== $cpassword) {
             $cpasswordErr = "Passwords do not match";
         }
-
         if (empty($gender)) {
             $genderErr = "Gender is required";
         } elseif (!preg_match("/^[a-zA-Z]*$/", $gender)) {
             $genderErr = "Invalid gender";
         }
 
-        if (empty($hobby)) {
+        if(empty($hobby)){
             $hobbyErr = "Hobby is required";
-        } elseif (!preg_match("/^[a-zA-Z ]*$/", $hobby)) {
+        } elseif(!preg_match("/^[a-zA-Z]*$/",$hobby)){
             $hobbyErr = "Invalid hobby";
         }
 
-        if (empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr) && empty($passwordErr) && empty($cpasswordErr)) {
-            $hashedPassword = md5($password);
-            $sql = "INSERT INTO users (`full_name`, `email`, `mobile`, `dob`, `gender`, `hobby`, `images`, `password`) 
-                    VALUES ('".$full_name."', '".$email."', '".$mobile."', '".$dob."', '".$gender."', '".$hobby."', '".$fileNameJson."', '".$hashedPassword."')";
 
-            if (mysqli_query($conn, $sql)) {
-                $_SESSION['success_message'] = "User Successfully Registered";
-                header("Location: login.php"); 
-            } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            }
+        if(empty($nameErr) && empty($emailErr) && empty($mobileErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr) && empty($passwordErr) && empty($cpassword)){
+            $hashedPassword = md5($password);
+            $sql = "INSERT INTO users (`full_name`,`email`,`mobile`,`dob`,`gender`,`hobby`,`images`,`password`)
+                    VALUES ('".$full_name."','".$email."','".$mobile."','".$dob."','".$gender."','".$hobby."','".$fileNameJson."','".$hashedPassword."')";
+
+                    if(mysqli_query($conn,$sql)){
+                        $_SESSION['success_message']="User Successfully Registered";
+                        header("Location:login.php");
+                    }else{
+                        echo "Error:".$sql."<br>".mysqli_error($conn);
+                    }
         }
     }
 ?>
@@ -125,7 +126,7 @@
     <span class="error"><?php echo $mobileErr;?></span><br>
 
     <label for="date">Date of Birth:</label><br>
-    <input type="date" id="date" name="dob" value="<?php echo isset($dob) ? $dob : ''; ?>"><br>
+     <input type="date" name="dob" id="date" value="<?php echo isset($dob) ? $dob :'';?>"><br>
     <span class="error"><?php echo $dobErr;?></span><br>
 
     <label for="gender">Gender:</label><br>
@@ -136,10 +137,10 @@
     <span class="error"><?php echo $genderErr;?></span><br>
 
     <label for="hobby">Hobby:</label><br>
-    <input type="text" id="hobby" name="hobby" value="<?php echo isset($hobby) ? $hobby : ''; ?>"><br>
+     <input type="text" id="hobby" name="hobby" value="<?php echo isset($hobby)?$hobby : '';?>"><br>
     <span class="error"><?php echo $hobbyErr;?></span><br>
     <label for="file">Images:</label><br>
-    <input type="file" id="file" name="file[]" multiple><br><br>
+    <input type="file" id="file" name="file[]"multiple><br><br>
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password"><br>
     <span class="error"><?php echo $passwordErr;?></span><br>

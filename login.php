@@ -59,4 +59,3 @@
 <a href="Registration.php">
   <button>Register</button>
 </a>
-controller model view using in oops in php

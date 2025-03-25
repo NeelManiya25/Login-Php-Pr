@@ -109,6 +109,3 @@ if(isset($_POST['submit'])){
     <input type="file" id="file" name="file[]" multiple><br><br>
     <input type="submit" value="Submit" name="submit">
 </form>
-
-
-AdduserController controller AdduserModel  model  UserForm view using in oops in php

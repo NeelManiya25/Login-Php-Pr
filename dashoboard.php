@@ -140,5 +140,3 @@ if (isset($_GET['search'])) {
 }
 ?>
 </html>
-
-controller model view using in oops in php

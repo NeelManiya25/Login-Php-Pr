@@ -87,16 +87,14 @@ if (isset($_POST['submit'])) {
 
     if (empty($nameErr) && empty($dobErr) && empty($genderErr) && empty($hobbyErr)) {
         $filenames = json_encode(array_values($imageList));
-        
-        $updateSQL = "UPDATE users SET
-                    `full_name`    = '$full_name',
-                --    `email`        = '$email',
-                --     `mobile`       = '$mobile',
-                    `dob`          = '$dob',
-                    `gender`       = '$gender',
-                    `hobby`        = '$hobby',
-                    `images`       = '$filenames'
-                    WHERE id = '$id'";
+
+        $updateSQL = "UPDATE users SET 
+                      `full_name`   = '$full_name',
+                      `dob`         = '$dob',
+                      `gender`      = '$gender',
+                      `hobby`       = '$hobby',
+                      `images`      = '$filenames'
+                       WHERE id = '$id'";
 
         if(mysqli_query($conn,$updateSQL)){
             header("Location:dashoboard.php");
@@ -135,14 +133,14 @@ if (isset($_POST['submit'])) {
         if($imageList){
             foreach($imageList as $image){
                 echo '<input type="checkbox" name="delete_images[]" value="'.$image.'" checked>
-                        <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">';
+                    <img src="upload/'.$image.'" style="height:40px;width:40px;margin-right:20px;">';
             }
-        } else{
+        }else{
             echo "No images found.";
         }
     ?>
     <br><br>
-    <input type="submit" value="Submit" name="submit">
+     <input type="submit" value="Submit" name="submit">
 </form> 
 </body>
 </html>

@@ -44,6 +44,7 @@ if(isset($_POST['submit'])){
             echo 'Error: ' . $exception->getMessage();
         }
     }
+
     $filenewname = implode(',', $fileNames);
     if (empty($full_name)) {
         $nameErr = "Name is required";

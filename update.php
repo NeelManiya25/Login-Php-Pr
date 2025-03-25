@@ -146,3 +146,4 @@ if (isset($_POST['submit'])) {
 </form> 
 </body>
 </html>
+controllers model views easye way code in oops in php

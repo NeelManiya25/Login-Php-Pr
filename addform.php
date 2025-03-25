@@ -6,7 +6,7 @@ $emailErr = "";
 $mobileErr = "";
 $dobErr = "";
 $genderErr = "";
-$hobbyErr = "";
+$hobbyErr = ""; 
 if(isset($_POST['submit'])){
     $full_name = $_POST['full_name'];
     $email = $_POST['email'];
@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
 ?>
 <form method="POST" enctype="multipart/form-data">
     <label for="name">Name:</label><br>
-    <input type="text" id="name" name="full_name" value="<?php echo isset($full_name) ? $full_name : ''; ?>"><br>
+    <input type="text" id="name" name="full_name" value="<?php echo isset($full_name) ? $full_name : '';?>"><br>
     <span class="error"><?php echo $nameErr; ?></span><br>
     <label for="email">Email:</label><br>
     <input type="text" id="email" name="email" value="<?php echo isset($email) ? $email : ''; ?>"><br>
@@ -109,3 +109,6 @@ if(isset($_POST['submit'])){
     <input type="file" id="file" name="file[]" multiple><br><br>
     <input type="submit" value="Submit" name="submit">
 </form>
+
+
+AdduserController controller AdduserModel  model  UserForm view using in oops in php
